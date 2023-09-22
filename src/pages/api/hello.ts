@@ -29,6 +29,6 @@ export default async function handler(
     .then(res => console.log('LOCAL success'))
     .catch((err) => console.log('LOCAL error', err.message))
   // res.send({ name: 'John Doe' })
-  res.status(200).send({ name: 'John Doe' })
+  res.status(200).json({ name: 'John Doe' })
 }
 
