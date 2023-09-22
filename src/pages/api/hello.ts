@@ -12,19 +12,19 @@ export default async function handler(
 ) {
   const { status, documentHexid }: Record<string, any> = req.query ?? {};
 
-  const query = new URLSearchParams({
-    status: status,
-    documentHexid: documentHexid
-  }).toString();
-  // QA
-  // fetch('https://backendonboardingqa.azurewebsites.net/loans/whatsignHooks', )
-  // DEV
-  // fetch('https://backendonboarding.azurewebsites.net/loans/whatsignHooks')
-  // LOCAL
-  const url = `https://khwsmpj9-8000.use2.devtunnels.ms/loans/whatsignHooks?${query}`
-  const resp = await fetch(url)
-    .catch((err) => console.log(err));
+  const config = { params: { status, documentHexid } }
 
+  // QA
+  await axios.post('https://backendonboardingqa.azurewebsites.net/loans/whatsignHooks', config)
+    .catch((err) => console.log(err.message))
+
+  // DEV
+  await axios.post('https://backendonboarding.azurewebsites.net/loans/whatsignHooks', config)
+    .catch((err) => console.log(err.message))
+
+  // LOCAL
+  await axios.post(`https://khwsmpj9-8000.use2.devtunnels.ms/loans/whatsignHooks`, config)
+    .catch((err) => console.log(err.message))
   // res.send({ name: 'John Doe' })
   res.status(200).send({ name: 'John Doe' })
 }
